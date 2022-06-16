@@ -1,82 +1,21 @@
 <template>
-  <div class="scoreboard">   
+  <div class="scoreboard">
     <div class="score_array">
       <div class="left">
-        <div class="as line">
-          <span>AS</span>
-          <div class="score_as">{{this.totalAs}}</div>
-        </div>
-        <div class="two line">
-          <span>DEUX</span>
-          <div class="score_two">{{this.score[1].totalTwo}}</div>
-        </div>
-        <div class="as line">
-          <span>TROIS</span>
-          <div class="score_as">3</div>
-        </div>
-        <div class="as line">
-          <span>QUATRE</span>
-          <div class="score_as">4</div>
-        </div>
-        <div class="as line">
-          <span>CING</span>
-          <div class="score_as">8</div>
-        </div>
-        <div class="as line">
-          <span>SIX</span>
-          <div class="score_as">6</div>
-        </div>
-        <div class="as line">
-          <span>TOTAL</span>
-          <div class="score_as">6</div>
-        </div>
-        <div class="as line">
-          <span>BONUS > 62</span>
-          <div class="score_as">6</div>
-        </div>
-        <div class="as line">
-          <span>TOTAL + BONUS</span>
-          <div class="score_as"></div>
+        <div>
+          <div class="as line" v-for="(line, idx) in left" :key="idx">
+            <span>{{ line.name }}: </span>
+            <div class="score_as">{{ line.score }}</div>
+          </div>
         </div>
       </div>
       <div class="right">
-        <div class="as line">
-          <span>Plus</span>
-          <div class="score_as">1</div>
+        <div>
+          <div class="as line" v-for="(line, idx) in right" :key="idx">
+            <span>{{ line.name }}</span>
+            <div class="score_as">{{ line.score }}</div>
+          </div>
         </div>
-        <div class="two line">
-          <span>Moins</span>
-          <div class="score_two">2</div>
-        </div>
-        <div class="as line">
-          <span>TOTAL 2</span>
-          <div class="score_as">3</div>
-        </div>
-        <div class="as line">
-          <span>Suite</span>
-          <div class="score_as">4</div>
-        </div>
-        <div class="as line">
-          <span>Full</span>
-          <div class="score_as">8</div>
-        </div>
-        <div class="as line ">
-          <span>Carré</span>
-          <div class="score_as">6</div>
-        </div>
-        <div class="as line ">
-          <span>Yams</span>
-          <div class="score_as">6</div>
-        </div>
-        <div class="as line ">
-          <span>TOTAL 3</span>
-          <div class="score_as">6</div>
-        </div>
-        <div class="as line ">
-          <span>Résultat final</span>
-          <div class="score_as"></div>
-        </div>
-      </div>
       </div>
     </div>
   </div>
@@ -87,10 +26,27 @@ export default {
   name: "Scoreboard",
   data() {
     return {
-      score: [
-        { name: "As", totalAs: "4" },
-        { name: "As", totalTwo: "8" },
+      left: [
+        { name: "As", score: "" },
+        { name: "Two", score: "" },
+        { name: "Three", score: "" },
+        { name: "Four", score: "" },
+        { name: "Five", score: "" },
+        { name: "Six", score: "" },
+        { name: "Total", score: "" },
+        { name: "Bonus>62", score: "" },
+        { name: "Total+Bonus", score: "" },
       ],
+      right: [
+        { name: "Plus", score: "" },
+        { name: "Less", score: "" },
+        { name: "Straight", score: "" },
+        { name: "Full", score: "" },
+        { name: "Yams", score: "" },
+        { name: "Total3", score: "" },
+        { name: "FinalResult", score: "" },
+      ],
+
       totalAs: "112341351",
     };
   },
@@ -100,7 +56,7 @@ export default {
 <style lang="scss">
 .scoreboard {
   width: 100%;
-  height: 550px;
+  height: 640px;
 }
 .score_array {
   width: 80%;
@@ -114,9 +70,11 @@ export default {
   margin: 15px;
 }
 .line {
-  border: rgb(77, 77, 237) solid 1px;
+  display: flex;
+  border: rgb(77, 77, 237) solid 2px;
   border-radius: 5px;
   height: 40px;
   margin: 10px;
+  padding: 5px;
 }
 </style>
