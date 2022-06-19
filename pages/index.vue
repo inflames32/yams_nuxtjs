@@ -15,39 +15,37 @@
       />
     </div>
 
-    <div className="btn-container" v-if="!gameIsStart">
+    <!--  <div class="btn-container" v-if="!gameIsStart">
       <button type="button" @click="startTheGame">Nouvelle partie!</button>
-    </div>
-    <div className="btn-container" v-else>
-      <div>Partie en cours!</div>
-      <div className="text">
-        RELANCE<span v-if="this.counterOfThrow > 1">S</span> DISPONIBLE<span
-          v-if="this.counterOfThrow > 1"
-          >S: </span
-        ><span>{{ this.counterOfThrow }}</span>
-
-        <button
-          type="button"
-          class="btn_throw"
-          @click="lancerLesDes"
-          v-if="counterOfThrow > 0"
-        >
-          Relancer
-        </button>
-        <button
-          type="button"
-          class="btn_throw"
-          v-else-if="counterOfThrow === 0"
-          disabled
-        >
-          Fin du tour
-        </button>
+    </div> -->
+    <div class="btn-container">
+      <div class="text">
+        <div>
+          RELANCE<span v-if="this.counterOfThrow > 1">S</span> DISPONIBLE<span
+            v-if="this.counterOfThrow > 1"
+            >S: </span
+          ><span>{{ this.counterOfThrow }}</span>
+          <div>Nombre de tours restants: {{ this.counterOfTurn }}</div>
+        </div>
+        <div>
+          <button
+            type="button"
+            class="btn_throw"
+            @click="lancerLesDes"
+            v-if="counterOfThrow !== 0"
+          >
+            Lancer les dés
+          </button>
+          <button
+            type="button"
+            class="btn_throw"
+            v-else-if="counterOfThrow === 0"
+            disabled
+          >
+            Fin du tour
+          </button>
+        </div>
       </div>
-    </div>
-
-    <div>{{ this.counterOfTurn }}</div>
-    <div>
-      <!-- <span v-for="die in dice" :key="die.id">{{ die.locked }}</span> -->
     </div>
   </div>
 </template>
@@ -62,16 +60,16 @@ export default {
   data() {
     return {
       dice: [
-        { id: 0, value: "1", name: "die1", locked: false, roll: false },
-        { id: 1, value: "1", name: "die2", locked: false, roll: false },
-        { id: 2, value: "1", name: "die3", locked: false, roll: false },
-        { id: 3, value: "1", name: "die4", locked: false, roll: false },
-        { id: 4, value: "1", name: "die5", locked: false, roll: false },
+        { id: 0, value: 1, name: "first_die", locked: false, roll: false },
+        { id: 1, value: 1, name: "second_die", locked: false, roll: false },
+        { id: 2, value: 1, name: "third_die", locked: false, roll: false },
+        { id: 3, value: 1, name: "fourth_die", locked: false, roll: false },
+        { id: 4, value: 1, name: "fifth_die", locked: false, roll: false },
       ],
 
       gameIsStart: false,
       counterOfThrow: 3,
-      counterOfTurn: 13,
+      counterOfTurn: 12,
     };
   },
 
@@ -86,12 +84,15 @@ export default {
     toggleDieToLock(e) {
       let dieId = e.target.getAttribute("id");
       console.log(dieId);
-
-      this.dice[dieId].locked = !this.dice[dieId].locked;
+      if (this.counterOfThrow === 3) {
+        return;
+      } else {
+        this.dice[dieId].locked = !this.dice[dieId].locked;
+      }
     },
     lancerLesDes() {
       // enléve 1 aux lancers disponibles
-      this.counterOfThrow--;
+
       // enléve 1 aux tours dans le jeu
       this.counterOfTurn--;
       if (this.counterOfTurn === 0) {
@@ -108,10 +109,12 @@ export default {
         this.dice.map((die) => {
           if (!die.locked) {
             die.roll = true;
-            die.value = Math.round(Math.random() * (6 - 1) + 1);
+            let test = (die.value = Math.round(Math.random() * (6 - 1) + 1));
+            console.log(test);
             die.roll = false;
           }
         });
+        this.counterOfThrow--;
       }
     },
     lockedState() {
@@ -133,21 +136,42 @@ export default {
   width: 100%;
 }
 .dice_container {
+  @media screen and(max-width:680px) {
+    display: flex;
+    flex-wrap: wrap;
+  }
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 80%;
+  margin: auto;
   height: 160px;
-  border: rgb(77, 77, 237) solid 1px;
+  border: rgb(77, 77, 237) solid 2px;
   border-radius: 5px;
 }
 .die_img {
-  min-width: 15%;
+  @media screen and(max-width:680px) {
+    margin: 5px;
+  }
+  max-width: 15%;
   margin: 15px;
   height: auto;
+  box-sizing: border-box;
   &:hover {
     transform: rotate(360deg);
     transition: 2sec;
   }
+}
+.btn-container {
+  display: flex;
+  justify-content: center;
+}
+.text {
+  display: flex;
+  flex-direction: column;
+
+  align-content: center;
+  justify-content: center;
+  margin: 5px;
 }
 
 .btn_throw {

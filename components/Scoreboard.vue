@@ -40,8 +40,10 @@ export default {
       right: [
         { name: "Plus", score: "" },
         { name: "Less", score: "" },
+        { name: "Total Plus | Moins", score: "" },
         { name: "Straight", score: "" },
         { name: "Full", score: "" },
+        { name: "Carre", score: "" },
         { name: "Yams", score: "" },
         { name: "Total3", score: "" },
         { name: "FinalResult", score: "" },
@@ -59,7 +61,7 @@ export default {
   height: 640px;
 }
 .score_array {
-  width: 80%;
+  width: 88%;
   display: flex;
   justify-content: center;
   margin: auto;
