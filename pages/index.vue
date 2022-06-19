@@ -1,45 +1,29 @@
 <template>
   <div class="gamezone">
-    <Scoreboard />
-    <div class="dice_container">
-      <img
-        :class="'die_img ' + die.locked"
-        :src="require(`~/assets/img/dice/${die.value}.svg`)"
-        alt=""
-        v-for="die in dice"
-        :key="`${die.id}`"
-        :value="`${die.value}`"
-        :id="`${die.id}`"
-        :name="`${die.name}`"
-        @click="toggleDieToLock"
-      />
-    </div>
-
+    <Scoreboard :scores="scores" />
+    <Die :dice="dice" :counterOfRoll="counterOfRoll" />
     <!--  <div class="btn-container" v-if="!gameIsStart">
       <button type="button" @click="startTheGame">Nouvelle partie!</button>
     </div> -->
     <div class="btn-container">
       <div class="text">
-        <div>
-          RELANCE<span v-if="this.counterOfThrow > 1">S</span> DISPONIBLE<span
-            v-if="this.counterOfThrow > 1"
-            >S: </span
-          ><span>{{ this.counterOfThrow }}</span>
-          <div>Nombre de tours restants: {{ this.counterOfTurn }}</div>
-        </div>
-        <div>
+        <Message
+          :counterOfRoll="counterOfRoll"
+          :counterOfTurn="counterOfTurn"
+        />
+        <div class="btn_roll_container">
           <button
             type="button"
-            class="btn_throw"
+            class="btn_roll"
             @click="lancerLesDes"
-            v-if="counterOfThrow !== 0"
+            v-if="counterOfRoll !== 0"
           >
             Lancer les dés
           </button>
           <button
             type="button"
-            class="btn_throw"
-            v-else-if="counterOfThrow === 0"
+            class="btn_roll"
+            v-else-if="counterOfRoll === 0"
             disabled
           >
             Fin du tour
@@ -51,11 +35,8 @@
 </template>
 
 <script>
-/* import Die from "~/components/Die.vue"; */
-import Scoreboard from "~/components/Scoreboard.vue";
-
 export default {
-  components: { /* Die ,*/ Scoreboard },
+  components: {},
   name: "IndexPage",
   data() {
     return {
@@ -66,33 +47,68 @@ export default {
         { id: 3, value: 1, name: "fourth_die", locked: false, roll: false },
         { id: 4, value: 1, name: "fifth_die", locked: false, roll: false },
       ],
+      scores: [
+        { name: "As", score: 1 },
+        { name: "Deux", score: 2 },
+        { name: "Trois", score: null },
+        { name: "Quatre", score: null },
+        { name: "Cinq", score: null },
+        { name: "Six", score: null },
+        { name: "Total", score: null },
+        { name: "Bonus>62", score: null },
+        { name: "Total+Bonus", score: null },
+        { name: "Plus", score: null },
+        { name: "Moins", score: null },
+        { name: "Total Plus | Moins", score: null },
+        { name: "Suite", score: null },
+        { name: "Full", score: null },
+        { name: "Carré", score: null },
+        { name: "Yams", score: null },
+        { name: "Total3", score: null },
+        { name: "Final", score: null },
+      ],
 
       gameIsStart: false,
-      counterOfThrow: 3,
-      counterOfTurn: 12,
+      counterOfRoll: 3,
+      counterOfTurn: 13,
     };
   },
 
+  computed: {
+    test() {
+      console.log("computed test");
+      let sumAs = this.dice.reduce((total, die) => {
+        if (die.value === 1) {
+          total + die.value;
+        } else {
+          total;
+        }
+        console.log(sumAs);
+        return sumAs;
+      });
+    },
+  },
+
   methods: {
+    sumAs() {
+      console.log("ici");
+      let sumAs = this.dice.reduce((total, die) => {
+        if (die.value === 1) {
+          total + die.value;
+        } else {
+          total;
+        }
+        console.log(sumAs);
+        return sumAs;
+      });
+    },
     // lancer la partie
     startTheGame() {
       this.gameIsStart = true;
       console.log(this.gameIsStart);
     },
 
-    // ajouter un dés au tableau des dés à conserver (ne pas relancer)
-    toggleDieToLock(e) {
-      let dieId = e.target.getAttribute("id");
-      console.log(dieId);
-      if (this.counterOfThrow === 3) {
-        return;
-      } else {
-        this.dice[dieId].locked = !this.dice[dieId].locked;
-      }
-    },
     lancerLesDes() {
-      // enléve 1 aux lancers disponibles
-
       // enléve 1 aux tours dans le jeu
       this.counterOfTurn--;
       if (this.counterOfTurn === 0) {
@@ -100,7 +116,7 @@ export default {
         console.log("ici");
         return;
       }
-      if (this.counterOfThrow === 0) {
+      if (this.counterOfRoll === 0) {
         console.log("vous n'avez plus de lancer disponibles");
         console.log("ici");
         return;
@@ -114,7 +130,8 @@ export default {
             die.roll = false;
           }
         });
-        this.counterOfThrow--;
+        // enléve 1 aux lancers disponibles
+        this.counterOfRoll--;
       }
     },
     lockedState() {
@@ -168,13 +185,16 @@ export default {
 .text {
   display: flex;
   flex-direction: column;
-
   align-content: center;
   justify-content: center;
   margin: 5px;
 }
-
-.btn_throw {
+.btn_roll_container {
+  display: flex;
+  justify-content: center;
+  margin: 5px;
+}
+.btn_roll {
   border: none;
   color: white;
   background-color: green;
@@ -189,6 +209,7 @@ export default {
   justify-content: center;
   z-index: 2000; */
 }
+
 .roll {
   transform: rotate(360deg);
   transition: 0.5s;

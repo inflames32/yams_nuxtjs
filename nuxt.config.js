@@ -1,10 +1,11 @@
 export default {
   target: "server",
+  /*  ssr: false, */
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "yams-nuxtjs",
+    title: "Mon yams avec nuxtjs",
     htmlAttrs: {
-      lang: "en",
+      lang: "fr",
     },
     meta: [
       { charset: "utf-8" },
