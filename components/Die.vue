@@ -4,7 +4,7 @@
       :class="'die_img ' + `${die.locked}`"
       :src="require(`~/assets/img/dice/${die.value}.svg`)"
       alt=""
-      v-for="die in this.dice"
+      v-for="die in dice"
       :key="`${die.id}`"
       :value="`${die.value}`"
       :id="`${die.id}`"
@@ -20,6 +20,7 @@ export default {
   name: "Die",
   props: {
     dice: Array,
+    counterOfRoll: Number,
   },
   data() {
     return {};

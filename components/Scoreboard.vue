@@ -8,7 +8,10 @@
             v-for="(line, idx) in left"
             :key="idx"
           >
-            <div>{{ line.name }} : {{ line.score }}</div>
+            <div>
+              {{ line.name }} :
+              <span>{{ line.score }}</span>
+            </div>
             <div :class="`${line.score}`">{{ line.score }}</div>
           </div>
         </div>
@@ -31,7 +34,7 @@ export default {
   data() {
     return {
       left: [
-        { name: "As", score: null },
+        { name: "Un", score: null },
         { name: "Deux", score: null },
         { name: "Trois", score: null },
         { name: "Quatre", score: null },
@@ -58,7 +61,8 @@ export default {
         scoreAs() {},
       },
       props: {
-        scores: Array,
+        /* scores: Array, */
+        sumAs: Function,
       },
     };
   },

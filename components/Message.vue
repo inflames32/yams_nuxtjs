@@ -3,11 +3,11 @@
     <div>
       RELANCE<span v-if="this.counterOfRoll > 1">S</span> DISPONIBLE<span
         v-if="this.counterOfRoll > 1"
-        >S: </span
+        >S : </span
       ><span>{{ this.counterOfRoll }}</span>
     </div>
 
-    <div>Nombre de tours restants: {{ this.counterOfTurn }}</div>
+    <!-- <div>Nombre de tours restants: {{ this.counterOfTurn }}</div> -->
   </div>
 </template>
 

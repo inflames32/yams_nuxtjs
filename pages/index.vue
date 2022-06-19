@@ -1,6 +1,6 @@
 <template>
   <div class="gamezone">
-    <Scoreboard :scores="scores" />
+    <Scoreboard :scores="scores" :sumAs="sumAs" />
     <Die :dice="dice" :counterOfRoll="counterOfRoll" />
     <!--  <div class="btn-container" v-if="!gameIsStart">
       <button type="button" @click="startTheGame">Nouvelle partie!</button>
@@ -47,7 +47,7 @@ export default {
         { id: 3, value: 1, name: "fourth_die", locked: false, roll: false },
         { id: 4, value: 1, name: "fifth_die", locked: false, roll: false },
       ],
-      scores: [
+      /* scores: [
         { name: "As", score: 1 },
         { name: "Deux", score: 2 },
         { name: "Trois", score: null },
@@ -66,40 +66,87 @@ export default {
         { name: "Yams", score: null },
         { name: "Total3", score: null },
         { name: "Final", score: null },
-      ],
+      ], */
 
       gameIsStart: false,
       counterOfRoll: 3,
       counterOfTurn: 13,
     };
   },
-
-  computed: {
-    test() {
-      console.log("computed test");
-      let sumAs = this.dice.reduce((total, die) => {
-        if (die.value === 1) {
-          total + die.value;
-        } else {
-          total;
-        }
-        console.log(sumAs);
-        return sumAs;
-      });
-    },
+  mounted() {
+    /* alert(`c'est monté!`); */
+    this.sumTwo;
   },
 
   methods: {
-    sumAs() {
+    sumTwo() {
       console.log("ici");
-      let sumAs = this.dice.reduce((total, die) => {
-        if (die.value === 1) {
+      let sumTwo = this.dice.reduce((total, die) => {
+        if (die.value === 2) {
           total + die.value;
         } else {
           total;
         }
-        console.log(sumAs);
-        return sumAs;
+        console.log(sumTwo);
+        return sumTwo;
+      });
+    },
+    sumThree() {
+      console.log("ici");
+      let sumThree = this.dice.reduce((total, die) => {
+        if (die.value === 3) {
+          total + die.value;
+        } else {
+          total;
+        }
+        console.log(sumThree);
+        return sumThree;
+      });
+    },
+    sumFour() {
+      console.log("ici");
+      let sumFour = this.dice.reduce((total, die) => {
+        if (die.value === 4) {
+          total + die.value;
+        } else {
+          total;
+        }
+        console.log(sumFour);
+        return sumFour;
+      });
+    },
+    sumFive() {
+      console.log("ici");
+      let sumFive = this.dice.reduce((total, die) => {
+        if (die.value === 5) {
+          total + die.value;
+        } else {
+          total;
+        }
+        console.log(sumFive);
+        return sumFive;
+      });
+    },
+    sumSix() {
+      console.log("ici");
+      let sumSix = this.dice.reduce((total, die) => {
+        if (die.value === 6) {
+          total + die.value;
+        } else {
+          total;
+        }
+        console.log(sumSix);
+        return sumSix;
+      });
+    },
+    sumYams() {
+      let sumYams = this.dice.map((total, die) => {
+        if (die[i].value == die[i + 1].value) {
+          return (total = 50);
+        } else {
+          alert(`c'est un yams!!!`);
+          return (total = 0);
+        }
       });
     },
     // lancer la partie
